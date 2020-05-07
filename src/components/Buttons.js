@@ -45,6 +45,13 @@ export class Buttons extends Component {
 		});
 	};
 	render() {
+		if (Object.keys(this.state.letters).length === 0) {
+			let letters = {};
+			this.props.jumbledWord.forEach((letter, index) => {
+				letters[index] = letter;
+			});
+			this.setState({ letters });
+		}
 		return <div>{this.generateButtons()}</div>;
 	}
 }

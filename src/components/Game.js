@@ -58,8 +58,13 @@ export class Game extends Component {
 
 	/** push the letter to the selectedLetters array in state  */
 	setSelectedHandler = (letter) => {
+		console.log(letter);
 		this.setState((st) => {
-			let selectedLetters = st.selectedLetters.concat(letter);
+			// ['_', '_', '_', '_'];
+			let selectedLetters = [...st.selectedLetters];
+			console.log('i ran');
+			let x = selectedLetters.findIndex((el) => el === '_');
+			selectedLetters[x] = letter;
 			return { ...st, selectedLetters };
 		});
 	};
@@ -69,9 +74,7 @@ export class Game extends Component {
 		let us = '';
 		this.state.jumbledWord.forEach((el) => {
 			us += '_';
-			console.log(us);
 		});
-		console.log(us);
 		this.setState({ selectedLetters: us.split('') });
 	};
 
