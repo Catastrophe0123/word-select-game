@@ -80,6 +80,14 @@ export class Buttons extends Component {
 				<button onClick={this.backSpaceHandler}>Backspace</button>
 				<br />
 				<button onClick={this.onClearHandler}>Clear</button>
+				<br />
+				<button
+					onClick={this.props.onCheckHandler.bind(
+						this,
+						this.onClearHandler
+					)}>
+					Check
+				</button>
 			</div>
 		);
 	}

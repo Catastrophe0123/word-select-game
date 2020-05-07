@@ -32,8 +32,13 @@ export class Game extends Component {
 				'NEAR',
 				'ERA',
 				'OGRE',
+				'ORE',
+				'RAN',
 			]),
+			usedWords: new Set(),
 			selectedLetters: [],
+			error: null,
+			score: 0,
 		};
 	}
 
@@ -90,6 +95,43 @@ export class Game extends Component {
 		});
 	};
 
+	onCheckHandler = (onClearHandler) => {
+		let userWord = this.state.selectedLetters.join('').split('_')[0];
+		console.log(userWord);
+		if (userWord.length <= 2) {
+			return this.setState({ error: "Two letter words don't count" });
+		}
+		userWord = userWord.toUpperCase();
+		// age
+		if (
+			this.state.validWord.has(userWord) &&
+			!this.state.usedWords.has(userWord)
+		) {
+			// set score
+			// set errors to null
+			// clear the input
+			// add the word to the usedWords array
+			console.log('i ranasd');
+			this.setState((st) => {
+				let len = userWord.length;
+				let score = st.score;
+				if (len === 3) score += 5;
+				if (len === 4) score += 10;
+				if (len === 5) score += 20;
+				if (len >= 6) score += 100;
+				let usedWords = new Set(st.usedWords);
+				usedWords.add(userWord);
+				onClearHandler();
+				return { ...st, score, error: null, usedWords };
+			});
+		} else if (this.state.usedWords.has(userWord)) {
+			this.setState({ error: 'We have been through this before' });
+		} else {
+			this.setState({ error: 'Thats not english' });
+			return;
+		}
+	};
+
 	componentDidMount = () => {
 		this.selectWord();
 		// jumble the selected word
@@ -100,6 +142,7 @@ export class Game extends Component {
 		return (
 			<div>
 				<h1>WELCOME TO WORD SCRAMBLE GAME</h1>
+				<h1>SCORE : {this.state.score}</h1>
 				<h2>{this.state.jumbledWord.join('')}</h2>
 				<h1 style={{ letterSpacing: '5px' }}>
 					{' '}
@@ -113,8 +156,10 @@ export class Game extends Component {
 					selectedWord={this.state.selectedWord}
 					backSpace={this.backSpace}
 					setUnderscores={this.setUnderscores}
+					onCheckHandler={this.onCheckHandler}
 				/>
-				<button>Check</button>
+
+				{this.state.error ? <p>{this.state.error}</p> : null}
 			</div>
 		);
 	}
