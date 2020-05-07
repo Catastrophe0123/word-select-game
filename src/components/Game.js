@@ -29,6 +29,8 @@ export class Game extends Component {
 				'GEAR',
 				'RAGE',
 				'GONE',
+				'NEAR',
+				'ERA',
 			]),
 			selectedLetters: [],
 		};
@@ -58,8 +60,12 @@ export class Game extends Component {
 
 	/** push the letter to the selectedLetters array in state  */
 	setSelectedHandler = (letter) => {
+		console.log(letter);
 		this.setState((st) => {
-			let selectedLetters = st.selectedLetters.concat(letter);
+			// ['_', '_', '_', '_'];
+			let selectedLetters = [...st.selectedLetters];
+			let x = selectedLetters.findIndex((el) => el === '_');
+			selectedLetters[x] = letter;
 			return { ...st, selectedLetters };
 		});
 	};
@@ -69,10 +75,18 @@ export class Game extends Component {
 		let us = '';
 		this.state.jumbledWord.forEach((el) => {
 			us += '_';
-			console.log(us);
 		});
-		console.log(us);
 		this.setState({ selectedLetters: us.split('') });
+	};
+
+	/** helper function to remove the last entered letter in selectedLetters */
+	backSpace = () => {
+		this.setState((st) => {
+			let selectedLetters = [...st.selectedLetters];
+			let x = selectedLetters.findIndex((el) => el === '_');
+			selectedLetters[x - 1] = '_';
+			return { ...st, selectedLetters };
+		});
 	};
 
 	componentDidMount = () => {
@@ -90,12 +104,16 @@ export class Game extends Component {
 					{' '}
 					{this.state.selectedLetters}{' '}
 				</h1>
+
 				<Buttons
 					setSelectedHandler={this.setSelectedHandler}
 					jumbledWord={this.state.jumbledWord}
 					jumbleWord={this.jumbleWord}
 					selectedWord={this.state.selectedWord}
+					backSpace={this.backSpace}
 				/>
+				<button>Clear</button>
+				<button>Check</button>
 			</div>
 		);
 	}
