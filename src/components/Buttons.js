@@ -36,14 +36,29 @@ export class Buttons extends Component {
 					value={letter}
 					name={index}
 					onClick={this.onLetterClickHandler}
-					disabled={
-						this.state.selectedLetters.has(index) ? true : false
-					}>
+					disabled={this.state.selectedLetters.has(index)}>
 					{letter}
 				</button>
 			);
 		});
 	};
+
+	/** function to remove the last entered letter
+	 *
+	 * 2 functions:
+	 * - remove the last letter and replace with _
+	 * - enable the letter back - remove from selectedLetters
+	 */
+	backSpaceHandler = () => {
+		this.props.backSpace();
+		this.setState((st) => {
+			let selectedLetters = [...st.selectedLetters];
+			selectedLetters.pop();
+			selectedLetters = new Set(selectedLetters);
+			return { ...st, selectedLetters };
+		});
+	};
+
 	render() {
 		if (Object.keys(this.state.letters).length === 0) {
 			let letters = {};
@@ -52,7 +67,13 @@ export class Buttons extends Component {
 			});
 			this.setState({ letters });
 		}
-		return <div>{this.generateButtons()}</div>;
+		return (
+			<div>
+				{this.generateButtons()}
+				<br />
+				<button onClick={this.backSpaceHandler}>Backspace</button>
+			</div>
+		);
 	}
 }
 
