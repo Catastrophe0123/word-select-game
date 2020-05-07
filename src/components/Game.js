@@ -31,6 +31,7 @@ export class Game extends Component {
 				'GONE',
 				'NEAR',
 				'ERA',
+				'OGRE',
 			]),
 			selectedLetters: [],
 		};
@@ -111,8 +112,8 @@ export class Game extends Component {
 					jumbleWord={this.jumbleWord}
 					selectedWord={this.state.selectedWord}
 					backSpace={this.backSpace}
+					setUnderscores={this.setUnderscores}
 				/>
-				<button>Clear</button>
 				<button>Check</button>
 			</div>
 		);
