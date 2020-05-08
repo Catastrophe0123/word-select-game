@@ -59,6 +59,12 @@ export class Buttons extends Component {
 		});
 	};
 
+	/** function to clear the user's input */
+	onClearHandler = () => {
+		this.setState({ selectedLetters: new Set() });
+		this.props.setUnderscores();
+	};
+
 	render() {
 		if (Object.keys(this.state.letters).length === 0) {
 			let letters = {};
@@ -72,6 +78,16 @@ export class Buttons extends Component {
 				{this.generateButtons()}
 				<br />
 				<button onClick={this.backSpaceHandler}>Backspace</button>
+				<br />
+				<button onClick={this.onClearHandler}>Clear</button>
+				<br />
+				<button
+					onClick={this.props.onCheckHandler.bind(
+						this,
+						this.onClearHandler
+					)}>
+					Check
+				</button>
 			</div>
 		);
 	}

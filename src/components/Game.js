@@ -31,16 +31,15 @@ export class Game extends Component {
 				'GONE',
 				'NEAR',
 				'ERA',
+				'OGRE',
+				'ORE',
+				'RAN',
 			]),
+			usedWords: new Set(),
 			selectedLetters: [],
+			error: null,
 		};
 	}
-
-	/** This is a description of the foo function.
-	 * generate words
-	 * @param {String} word - input word for splitting
-	 */
-	findLetters = (word) => {};
 
 	/** Select a word 6 letter from the dictionary at the start of the game  */
 	selectWord = () => {
@@ -60,7 +59,6 @@ export class Game extends Component {
 
 	/** push the letter to the selectedLetters array in state  */
 	setSelectedHandler = (letter) => {
-		console.log(letter);
 		this.setState((st) => {
 			// ['_', '_', '_', '_'];
 			let selectedLetters = [...st.selectedLetters];
@@ -76,7 +74,7 @@ export class Game extends Component {
 		this.state.jumbledWord.forEach((el) => {
 			us += '_';
 		});
-		this.setState({ selectedLetters: us.split('') });
+		this.setState({ selectedLetters: us.split(''), error: null });
 	};
 
 	/** helper function to remove the last entered letter in selectedLetters */
@@ -85,8 +83,47 @@ export class Game extends Component {
 			let selectedLetters = [...st.selectedLetters];
 			let x = selectedLetters.findIndex((el) => el === '_');
 			selectedLetters[x - 1] = '_';
-			return { ...st, selectedLetters };
+			return { ...st, selectedLetters, error: null };
 		});
+	};
+
+	/** Check if the userWord is a valid word and add score
+	 * @param {Function} onClearHandler - function used to clear the input
+	 */
+	onCheckHandler = (onClearHandler) => {
+		let userWord = this.state.selectedLetters.join('').split('_')[0];
+		if (userWord.length <= 2) {
+			return this.setState({ error: "Two letter words don't count" });
+		}
+
+		userWord = userWord.toUpperCase();
+		if (
+			this.state.validWord.has(userWord) &&
+			!this.state.usedWords.has(userWord)
+		) {
+			// set score
+			// set errors to null
+			// clear the input
+			// add the word to the usedWords array
+			this.setState((st) => {
+				let len = userWord.length;
+				let score = this.props.score;
+				if (len === 3) score += 5;
+				if (len === 4) score += 10;
+				if (len === 5) score += 20;
+				if (len >= 6) score += 100;
+				let usedWords = new Set(st.usedWords);
+				usedWords.add(userWord);
+				onClearHandler();
+				this.props.setScore(score);
+				return { ...st, error: null, usedWords };
+			});
+		} else if (this.state.usedWords.has(userWord)) {
+			this.setState({ error: 'We have been through this before' });
+		} else {
+			this.setState({ error: 'Thats not english' });
+			return;
+		}
 	};
 
 	componentDidMount = () => {
@@ -99,6 +136,7 @@ export class Game extends Component {
 		return (
 			<div>
 				<h1>WELCOME TO WORD SCRAMBLE GAME</h1>
+				<h1>SCORE : {this.props.score}</h1>
 				<h2>{this.state.jumbledWord.join('')}</h2>
 				<h1 style={{ letterSpacing: '5px' }}>
 					{' '}
@@ -111,9 +149,11 @@ export class Game extends Component {
 					jumbleWord={this.jumbleWord}
 					selectedWord={this.state.selectedWord}
 					backSpace={this.backSpace}
+					setUnderscores={this.setUnderscores}
+					onCheckHandler={this.onCheckHandler}
 				/>
-				<button>Clear</button>
-				<button>Check</button>
+
+				{this.state.error ? <p>{this.state.error}</p> : null}
 			</div>
 		);
 	}
