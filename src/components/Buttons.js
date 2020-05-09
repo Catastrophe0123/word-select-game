@@ -31,7 +31,8 @@ export class Buttons extends Component {
 	generateButtons = () => {
 		return this.props.jumbledWord.map((letter, index) => {
 			return (
-				<button
+                <div className="flex mb-4">
+				<button className="center inline-flex bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow "
 					key={index}
 					value={letter}
 					name={index}
@@ -39,6 +40,7 @@ export class Buttons extends Component {
 					disabled={this.state.selectedLetters.has(index)}>
 					{letter}
 				</button>
+            </div>
 			);
 		});
 	};
@@ -74,14 +76,16 @@ export class Buttons extends Component {
 			this.setState({ letters });
 		}
 		return (
-			<div>
+            <div>
+			<div className="flex flex-wrap center">
 				{this.generateButtons()}
-				<br />
-				<button onClick={this.backSpaceHandler}>Backspace</button>
-				<br />
-				<button onClick={this.onClearHandler}>Clear</button>
-				<br />
+            </div>
+                <br />
+                <br />
+				<button className="center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"  onClick={this.backSpaceHandler}>Backspace</button>
+				<button className="center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={this.onClearHandler}>Clear</button>
 				<button
+                    className="center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" 
 					onClick={this.props.onCheckHandler.bind(
 						this,
 						this.onClearHandler
