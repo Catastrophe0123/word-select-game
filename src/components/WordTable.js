@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/WordTable.css'
 
 export class WordTable extends Component {
 	/** classify the words according to length and display
@@ -20,13 +21,13 @@ export class WordTable extends Component {
 		});
 
 		return (
-			<div style={{ display: 'grid' }}>
+			<div className="table center flex">
 				{Object.values(elements).map((el, index) => {
 					return (
-						<div>
+						<div className="tracking-wide p-1 relative">
 							<h2>{el[0].length} letter words </h2>
 							{el.map((word) => {
-								return <div key={index}>{word}</div>;
+								return <div className="" key={index}>{word}</div>;
 							})}
 						</div>
 					);
