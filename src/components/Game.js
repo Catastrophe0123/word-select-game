@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Buttons from './Buttons';
 import WordTable from './WordTable';
+import Tilt from 'react-tilt';
+import logo from './logo.png'
+import '../styles/Game.css';
+ 
 
 export class Game extends Component {
 	/** Jumble a given word
@@ -98,7 +102,6 @@ export class Game extends Component {
 		if (userWord.length <= 2) {
 			return this.setState({ error: "Two letter words don't count" });
 		}
-
 		userWord = userWord.toUpperCase();
 		if (
 			this.state.validWord.has(userWord) &&
@@ -137,16 +140,24 @@ export class Game extends Component {
 
 	render() {
 		return (
-			<div>
-				<h1>WELCOME TO WORD SCRAMBLE GAME</h1>
-				<h1>SCORE : {this.props.score}</h1>
-				<h2>{this.state.jumbledWord.join('')}</h2>
-				<h1 style={{ letterSpacing: '5px' }}>
+        <div>
+        <header className="flex text-center text-2xl">
+                <Tilt className="inline-flex pl-4 Tilt br2 shadow-2" options={{ max : 55 }} style={{ height: 150, width: 150 }} >
+                     <div className="Tilt-inner pa3">
+                         <img style={{paddingTop: '5px'}} alt='logo' src={logo}/>
+                     </div>
+                </Tilt>
+                <h1 className="head1 center inline-flex text-white-400 ">Word Game</h1>
+        </header>
+        <div class="box transition container clearfix mx-auto border-2 rounded-none">
+				<h1 className="text-right">SCORE : {this.props.score}</h1> 
+				<h2 className="text-center">{this.state.jumbledWord.join('')}</h2>
+                <h1 className="center pl-4">
 					{' '}
 					{this.state.selectedLetters}{' '}
 				</h1>
 
-				<Buttons
+				<Buttons className="center"
 					setSelectedHandler={this.setSelectedHandler}
 					jumbledWord={this.state.jumbledWord}
 					jumbleWord={this.jumbleWord}
@@ -159,7 +170,8 @@ export class Game extends Component {
 				{this.state.error ? <p>{this.state.error}</p> : null}
 
 				<WordTable usedWords={[...this.state.usedWords]} />
-			</div>
+        </div>
+            </div>
 		);
 	}
 }
