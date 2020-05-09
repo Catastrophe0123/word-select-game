@@ -34,6 +34,7 @@ export class Game extends Component {
 				'OGRE',
 				'ORE',
 				'RAN',
+				'ORANGE',
 			]),
 			usedWords: new Set(),
 			selectedLetters: [],
@@ -43,6 +44,7 @@ export class Game extends Component {
 
 	/** Select a word 6 letter from the dictionary at the start of the game  */
 	selectWord = () => {
+		// take the size of the word to choose as a param
 		// TODO: Work with api and set state
 		// current word is hardcoded to ORANGE
 	};
