@@ -25,7 +25,7 @@ header .overlay{
 }
 
 .box{
-    max-width: 7;
+    max-width: 95%;
     padding: 1rem;
     color: white;
     border-width: 3px;
