@@ -39,7 +39,8 @@ export class Game extends Component {
 				'OGRE',
 				'ORE',
 				'RAN',
-				'ORANGE',
+                'ORANGE',
+                'NEGRO'
 			]),
 			usedWords: new Set(),
 			selectedLetters: [],
@@ -152,9 +153,8 @@ export class Game extends Component {
         <div class="box transition container clearfix mx-auto border-2 rounded-none">
 				<h1 className="text-right">SCORE : {this.props.score}</h1> 
 				<h2 className="text-center">{this.state.jumbledWord.join('')}</h2>
-                <h1 className="center pl-4">
-					{' '}
-					{this.state.selectedLetters}{' '}
+                <h1 className="center tracking-widest">
+					{' '}{this.state.selectedLetters}{' '}
 				</h1>
 
 				<Buttons className="center"
