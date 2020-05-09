@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Buttons from './Buttons';
+import WordTable from './WordTable';
 
 export class Game extends Component {
 	/** Jumble a given word
@@ -156,6 +157,8 @@ export class Game extends Component {
 				/>
 
 				{this.state.error ? <p>{this.state.error}</p> : null}
+
+				<WordTable usedWords={[...this.state.usedWords]} />
 			</div>
 		);
 	}

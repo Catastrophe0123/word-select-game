@@ -17,7 +17,7 @@ export class App extends Component {
 	/** Rerender the game screen to rerender the timer and move to the next level */
 	rerenderGame = () => {
 		this.setState((st) => {
-			return { ...st, key: st.key++ };
+			return { ...st, key: st.key++, seconds: 120000, key1: st.key1++ };
 		});
 	};
 

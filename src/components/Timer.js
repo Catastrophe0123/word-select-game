@@ -13,7 +13,7 @@ export class Timer extends Component {
 					renderer={({ hours, minutes, seconds, completed }) => {
 						return (
 							<span>
-								{minutes} : {seconds}
+								0{minutes} : {seconds}
 							</span>
 						);
 					}}
