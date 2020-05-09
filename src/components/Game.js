@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Buttons from './Buttons';
+import WordTable from './WordTable';
 
 export class Game extends Component {
 	/** Jumble a given word
@@ -34,6 +35,7 @@ export class Game extends Component {
 				'OGRE',
 				'ORE',
 				'RAN',
+				'ORANGE',
 			]),
 			usedWords: new Set(),
 			selectedLetters: [],
@@ -43,6 +45,7 @@ export class Game extends Component {
 
 	/** Select a word 6 letter from the dictionary at the start of the game  */
 	selectWord = () => {
+		// take the size of the word to choose as a param
 		// TODO: Work with api and set state
 		// current word is hardcoded to ORANGE
 	};
@@ -154,6 +157,8 @@ export class Game extends Component {
 				/>
 
 				{this.state.error ? <p>{this.state.error}</p> : null}
+
+				<WordTable usedWords={[...this.state.usedWords]} />
 			</div>
 		);
 	}

@@ -17,10 +17,11 @@ export class App extends Component {
 	/** Rerender the game screen to rerender the timer and move to the next level */
 	rerenderGame = () => {
 		this.setState((st) => {
-			return { ...st, key: st.key++ };
+			return { ...st, key: st.key++, seconds: 120000, key1: st.key1++ };
 		});
 	};
 
+	/** Function to remove the modal and start a new game */
 	onContinueHandler = () => {
 		this.setState((st) => {
 			return {
@@ -34,6 +35,7 @@ export class App extends Component {
 		});
 	};
 
+	/** display the game over modal */
 	displayModal = () => {
 		const gameoverString = 'GAME OVER';
 		if (this.state.showModal) {
@@ -63,6 +65,8 @@ export class App extends Component {
 		}
 	};
 
+	/** maintain the time in local state.
+	 *  Called on each tick */
 	setTimeHandler = (data) => {
 		// data.seconds
 		this.setState((st) => {
