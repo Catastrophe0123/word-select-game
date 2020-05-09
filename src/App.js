@@ -3,6 +3,20 @@ import Game from './components/Game';
 import Modal from './components/Modal';
 import BackDrop from './components/BackDrop';
 import Timer from './components/Timer';
+import Particles from 'react-particles-js';
+import "./App.css";
+
+const particlesOptions = {
+    particles: {
+        number: {
+            value: 30,
+            density: {
+                enable: true,
+                value_area: 800
+            }
+        }
+    }
+}
 
 export class App extends Component {
 	state = { score: 0, key: 1, seconds: 120000, key1: 0, showModal: false };
@@ -41,7 +55,7 @@ export class App extends Component {
 		if (this.state.showModal) {
 			return (
 				<div>
-					<Modal>
+					<Modal className="">
 						<h4>{gameoverString}</h4>
 						<button onClick={this.onContinueHandler}>
 							Continue
@@ -74,11 +88,21 @@ export class App extends Component {
 				seconds: data.total,
 			};
 		});
-	};
+    };
+    
+        
 
 	render() {
 		return (
 			<div>
+                <div className="text-right">
+                    Timer:<Timer className="cover-right"
+					key={this.state.key1}
+					seconds={this.state.seconds}
+					onTimerEndHandler={this.onTimerEndHandler}
+					setTimeHandler={this.setTimeHandler}
+				/>
+                </div>
 				<Game
 					key={this.state.key}
 					rerenderGame={this.rerenderGame}
@@ -86,12 +110,9 @@ export class App extends Component {
 					setScore={this.setScore}
 					onContinueHandler={this.onContinueHandler}
 				/>
-				<Timer
-					key={this.state.key1}
-					seconds={this.state.seconds}
-					onTimerEndHandler={this.onTimerEndHandler}
-					setTimeHandler={this.setTimeHandler}
-				/>
+                <Particles className="particles" 
+                params={{particlesOptions}
+                } />
 				{this.displayModal()}
 			</div>
 		);
