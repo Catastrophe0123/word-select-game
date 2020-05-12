@@ -18,29 +18,21 @@ export class Buttons extends Component {
 		this.props.setSelectedHandler(letter);
 	};
 
-	componentDidMount = () => {
-		this.props.jumbleWord(this.props.selectedWord);
-		let letters = {};
-		this.props.jumbledWord.forEach((letter, index) => {
-			letters[index] = letter;
-		});
-		this.setState({ letters });
-	};
-
 	/** Generates button for each letter in the word  */
 	generateButtons = () => {
 		return this.props.jumbledWord.map((letter, index) => {
 			return (
-                <div className="flex mb-4">
-				<button className="center inline-flex bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow "
-					key={index}
-					value={letter}
-					name={index}
-					onClick={this.onLetterClickHandler}
-					disabled={this.state.selectedLetters.has(index)}>
-					{letter}
-				</button>
-            </div>
+				<div className='flex mb-4'>
+					<button
+						className='center inline-flex bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow '
+						key={index}
+						value={letter}
+						name={index}
+						onClick={this.onLetterClickHandler}
+						disabled={this.state.selectedLetters.has(index)}>
+						{letter}
+					</button>
+				</div>
 			);
 		});
 	};
@@ -67,6 +59,25 @@ export class Buttons extends Component {
 		this.props.setUnderscores();
 	};
 
+	/** jumble the selected word
+	 * @param {Boolean} clear - clear the input or not
+	 */
+	jumbleAgain = (clear = false) => {
+		this.props.jumbleWord(this.props.selectedWord);
+		let letters = {};
+		this.props.jumbledWord.forEach((letter, index) => {
+			letters[index] = letter;
+		});
+
+		if (clear) this.onClearHandler();
+
+		this.setState({ letters });
+	};
+
+	componentDidMount = () => {
+		this.jumbleAgain();
+	};
+
 	render() {
 		if (Object.keys(this.state.letters).length === 0) {
 			let letters = {};
@@ -76,21 +87,34 @@ export class Buttons extends Component {
 			this.setState({ letters });
 		}
 		return (
-            <div>
-			<div className="flex flex-wrap center">
-				{this.generateButtons()}
-            </div>
-                <br />
-                <br />
-				<button className="center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"  onClick={this.backSpaceHandler}>Backspace</button>
-				<button className="center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={this.onClearHandler}>Clear</button>
+			<div>
+				<div className='flex flex-wrap center'>
+					{this.generateButtons()}
+				</div>
+				<br />
+				<br />
 				<button
-                    className="center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" 
+					className='center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
+					onClick={this.backSpaceHandler}>
+					Backspace
+				</button>
+				<button
+					className='center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
+					onClick={this.onClearHandler}>
+					Clear
+				</button>
+				<button
+					className='center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
 					onClick={this.props.onCheckHandler.bind(
 						this,
 						this.onClearHandler
 					)}>
 					Check
+				</button>
+				<button
+					onClick={this.jumbleAgain.bind(this, true)}
+					className='center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'>
+					Jumble Again
 				</button>
 			</div>
 		);

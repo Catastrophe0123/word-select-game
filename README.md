@@ -1,4 +1,4 @@
-WOW – The World of Words Game
+# WOW – The World of Words Game
 
 Core Game
 Input:
@@ -17,19 +17,22 @@ Input:
      E NOR  
      `backspace` ENOR
 
-# Steps to run
+## Steps to run
 
 -   clone the repository
 -   run `npm install` to install the dependencies
 -   use `npm start` to start up the development server
 -   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
     The page will reload if you make edits.
-    You will also see any lint errors in the console.
+    You will also see lint errors in the console.
 
-# Features implemented
+## Features implemented
 
-[x] core game
-[x] As the user types words arrange them in different columns – 3 letters in one, 4 letters in another etc.
-[x] Implement – Jumble Again (this will re-arrange the letters of the word randomly but make sure that the original word is never shown). Users can request “Jumble” many times.
+-   [x] core game
+-   [x] As the user types words arrange them in different columns – 3 letters in one, 4 letters in another etc.
+-   [x] Implement – Jumble Again (this will re-arrange the letters of the word randomly but make sure that the original word is never shown). Users can request “Jumble” many times.
+-   [x] Introduce the concept of levels. The basic game is Level-1 Each new level increases the word length by 1. For example, Level-2 is a 7-letter word, Level-3 is 8 letters, Level-4 is 9 letters and Level-5 is 10 letters.
 
-# Todo
+## Todo
+
+-   [ ] Introduce a system of high scores for complex words. Complex words are not in common vocabulary.

@@ -4,22 +4,31 @@ import Modal from './components/Modal';
 import BackDrop from './components/BackDrop';
 import Timer from './components/Timer';
 import Particles from 'react-particles-js';
-import "./App.css";
+import './App.css';
 
 const particlesOptions = {
-    particles: {
-        number: {
-            value: 30,
-            density: {
-                enable: true,
-                value_area: 800
-            }
-        }
-    }
-}
+	particles: {
+		number: {
+			value: 30,
+			density: {
+				enable: true,
+				value_area: 800,
+			},
+		},
+	},
+};
 
 export class App extends Component {
-	state = { score: 0, key: 1, seconds: 120000, key1: 0, showModal: false };
+	state = {
+		score: 0,
+		key: 1,
+		seconds: 120000,
+		key1: 0,
+		showModal: false,
+		level: 1,
+		wordLength: 6,
+		scoreToBeat: 100,
+	};
 
 	/** Set the score state in the app component
 	 * @param {Number} score - score to add to the state
@@ -31,7 +40,15 @@ export class App extends Component {
 	/** Rerender the game screen to rerender the timer and move to the next level */
 	rerenderGame = () => {
 		this.setState((st) => {
-			return { ...st, key: st.key++, seconds: 120000, key1: st.key1++ };
+			return {
+				...st,
+				key: st.key++,
+				seconds: 120000,
+				key1: st.key1++,
+				level: st.level++,
+				scoreToBeat: st.scoreToBeat + 50,
+				wordLength: st.wordLength++,
+			};
 		});
 	};
 
@@ -45,6 +62,9 @@ export class App extends Component {
 				showModal: false,
 				seconds: 120000,
 				key1: st.key1++,
+				level: 1,
+				scoreToBeat: 100,
+				wordLength: 6,
 			};
 		});
 	};
@@ -55,7 +75,7 @@ export class App extends Component {
 		if (this.state.showModal) {
 			return (
 				<div>
-					<Modal className="">
+					<Modal className=''>
 						<h4>{gameoverString}</h4>
 						<button onClick={this.onContinueHandler}>
 							Continue
@@ -70,7 +90,7 @@ export class App extends Component {
 	/** Function that checks score and moves to next stage when timer ends */
 	onTimerEndHandler = () => {
 		// check if the score is > 100
-		if (this.state.score >= 100) {
+		if (this.state.score >= this.state.scoreToBeat) {
 			// keep current score and move on to next level
 			this.rerenderGame();
 		} else {
@@ -88,31 +108,35 @@ export class App extends Component {
 				seconds: data.total,
 			};
 		});
-    };
-    
-        
+	};
 
 	render() {
 		return (
 			<div>
-                <div className="text-right">
-                    Timer:<Timer className="cover-right"
-					key={this.state.key1}
-					seconds={this.state.seconds}
-					onTimerEndHandler={this.onTimerEndHandler}
-					setTimeHandler={this.setTimeHandler}
-				/>
-                </div>
+				<div className='text-right'>
+					Timer:
+					<Timer
+						className='cover-right'
+						key={this.state.key1}
+						seconds={this.state.seconds}
+						onTimerEndHandler={this.onTimerEndHandler}
+						setTimeHandler={this.setTimeHandler}
+					/>
+				</div>
 				<Game
+					level={this.state.level}
+					wordLength={this.state.wordLength}
 					key={this.state.key}
 					rerenderGame={this.rerenderGame}
 					score={this.state.score}
 					setScore={this.setScore}
 					onContinueHandler={this.onContinueHandler}
+					scoreToBeat={this.state.scoreToBeat}
 				/>
-                <Particles className="particles" 
-                params={{particlesOptions}
-                } />
+				<Particles
+					className='particles'
+					params={{ particlesOptions }}
+				/>
 				{this.displayModal()}
 			</div>
 		);
