@@ -1,68 +1,35 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+WOW – The World of Words Game
 
-## Available Scripts
+Core Game
+Input:
 
-In the project directory, you can run:
+-   You are given a list of valid words (one word per line) in a file. This is your reference list (dictionary).
+-   Display a 6 letter word (from a given dictionary) JUMBLED (mixed up) –
+    For example ORANGE jumbled as AEGNOR
+-   Start a timer (for 2 minutes)
+-   The user can type any 3,4,5,6 letter words using exactly the same letters in the original word - AGE, NOR, RANGE, GORE, GEAR, RAGE etc.
+-   As the user types each letter, it is removed from the original display so that the user knows what letters are left. A backspace will put the letter back in the word
 
-### `npm start`
+    Example:
+    User types Modified Word  
+     A EGNOR  
+     G ENOR  
+     E NOR  
+     `backspace` ENOR
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Steps to run
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+-   clone the repository
+-   run `npm install` to install the dependencies
+-   use `npm start` to start up the development server
+-   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    The page will reload if you make edits.
+    You will also see any lint errors in the console.
 
-### `npm test`
+# Features implemented
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[x] core game
+[x] As the user types words arrange them in different columns – 3 letters in one, 4 letters in another etc.
+[x] Implement – Jumble Again (this will re-arrange the letters of the word randomly but make sure that the original word is never shown). Users can request “Jumble” many times.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+# Todo
