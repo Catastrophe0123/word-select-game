@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/world-of-words/static/css/main.39cb3dad.chunk.css",
-    "main.js": "/world-of-words/static/js/main.b8d6daa1.chunk.js",
-    "main.js.map": "/world-of-words/static/js/main.b8d6daa1.chunk.js.map",
-    "runtime-main.js": "/world-of-words/static/js/runtime-main.f1977cbd.js",
-    "runtime-main.js.map": "/world-of-words/static/js/runtime-main.f1977cbd.js.map",
-    "static/css/2.036b41f9.chunk.css": "/world-of-words/static/css/2.036b41f9.chunk.css",
-    "static/js/2.5ed6a5fa.chunk.js": "/world-of-words/static/js/2.5ed6a5fa.chunk.js",
-    "static/js/2.5ed6a5fa.chunk.js.map": "/world-of-words/static/js/2.5ed6a5fa.chunk.js.map",
-    "index.html": "/world-of-words/index.html",
-    "precache-manifest.df6b9247d014a3e103f4db49da3b0568.js": "/world-of-words/precache-manifest.df6b9247d014a3e103f4db49da3b0568.js",
-    "service-worker.js": "/world-of-words/service-worker.js",
-    "static/css/2.036b41f9.chunk.css.map": "/world-of-words/static/css/2.036b41f9.chunk.css.map",
-    "static/css/main.39cb3dad.chunk.css.map": "/world-of-words/static/css/main.39cb3dad.chunk.css.map",
-    "static/js/2.5ed6a5fa.chunk.js.LICENSE.txt": "/world-of-words/static/js/2.5ed6a5fa.chunk.js.LICENSE.txt",
-    "static/media/logo.png": "/world-of-words/static/media/logo.bc47f899.png"
+    "main.css": "/word-select-game/static/css/main.39cb3dad.chunk.css",
+    "main.js": "/word-select-game/static/js/main.46f920e0.chunk.js",
+    "main.js.map": "/word-select-game/static/js/main.46f920e0.chunk.js.map",
+    "runtime-main.js": "/word-select-game/static/js/runtime-main.7b75daf3.js",
+    "runtime-main.js.map": "/word-select-game/static/js/runtime-main.7b75daf3.js.map",
+    "static/css/2.036b41f9.chunk.css": "/word-select-game/static/css/2.036b41f9.chunk.css",
+    "static/js/2.5ed6a5fa.chunk.js": "/word-select-game/static/js/2.5ed6a5fa.chunk.js",
+    "static/js/2.5ed6a5fa.chunk.js.map": "/word-select-game/static/js/2.5ed6a5fa.chunk.js.map",
+    "index.html": "/word-select-game/index.html",
+    "precache-manifest.07c6021ea3ad5fbfc3f1dafbb94e57cb.js": "/word-select-game/precache-manifest.07c6021ea3ad5fbfc3f1dafbb94e57cb.js",
+    "service-worker.js": "/word-select-game/service-worker.js",
+    "static/css/2.036b41f9.chunk.css.map": "/word-select-game/static/css/2.036b41f9.chunk.css.map",
+    "static/css/main.39cb3dad.chunk.css.map": "/word-select-game/static/css/main.39cb3dad.chunk.css.map",
+    "static/js/2.5ed6a5fa.chunk.js.LICENSE.txt": "/word-select-game/static/js/2.5ed6a5fa.chunk.js.LICENSE.txt",
+    "static/media/logo.png": "/word-select-game/static/media/logo.bc47f899.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.f1977cbd.js",
+    "static/js/runtime-main.7b75daf3.js",
     "static/css/2.036b41f9.chunk.css",
     "static/js/2.5ed6a5fa.chunk.js",
     "static/css/main.39cb3dad.chunk.css",
-    "static/js/main.b8d6daa1.chunk.js"
+    "static/js/main.46f920e0.chunk.js"
   ]
 }
