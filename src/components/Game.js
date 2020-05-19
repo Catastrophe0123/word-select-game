@@ -4,7 +4,7 @@ import WordTable from './WordTable';
 import Tilt from 'react-tilt';
 import logo from './logo.png';
 import '../styles/Game.css';
-import data from './dict.json';
+import data from './semifinaldict.json';
 
 export class Game extends Component {
 	/** Jumble a given word
@@ -58,10 +58,10 @@ export class Game extends Component {
 
 		let selectedWord = filteredWords[idx];
 
-		// let validWords = data[selectedWord];
+		let validWords = data[selectedWord];
 
 		this.setState({
-			// validWords: new Set(validWords),
+			validWords: new Set(validWords),
 			selectedWord,
 		});
 	};
@@ -121,8 +121,8 @@ export class Game extends Component {
 		}
 		userWord = userWord.toLowerCase();
 		if (
-			Object.keys(data).includes(userWord) &&
-			// this.state.validWords.has(userWord) &&
+			// Object.keys(data).includes(userWord) &&
+			this.state.validWords.has(userWord) &&
 			!this.state.usedWords.has(userWord)
 		) {
 			// set score
