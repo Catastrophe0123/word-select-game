@@ -3,7 +3,6 @@ import Game from './components/Game';
 import Modal from './components/Modal';
 import BackDrop from './components/BackDrop';
 import Timer from './components/Timer';
-import Particles from 'react-particles-js';
 import './App.css';
 
 const particlesOptions = {
@@ -57,11 +56,11 @@ export class App extends Component {
 		this.setState((st) => {
 			return {
 				...st,
-				key: st.key++,
+				key: (st.key += 1),
 				score: 0,
 				showModal: false,
 				seconds: 120000,
-				key1: st.key1++,
+				key1: (st.key1 += 1),
 				level: 1,
 				scoreToBeat: 100,
 				wordLength: 6,
@@ -133,10 +132,7 @@ export class App extends Component {
 					onContinueHandler={this.onContinueHandler}
 					scoreToBeat={this.state.scoreToBeat}
 				/>
-				<Particles
-					className='particles'
-					params={{ particlesOptions }}
-				/>
+
 				{this.displayModal()}
 			</div>
 		);
