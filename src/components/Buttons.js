@@ -10,6 +10,10 @@ export class Buttons extends Component {
 		ds: {},
 	};
 
+	/** helper function to update state
+	 * @param {String} letter - current letter
+	 * @param {Number} index - index of the letter in the jumbled word
+	 */
 	onLetterHelper = (letter, index) => {
 		this.setState(
 			(st) => {
@@ -155,6 +159,7 @@ export class Buttons extends Component {
 		);
 	};
 
+	/** sets the ds state at the start of the game */
 	setDs = () => {
 		let ds = {};
 		for (let i in this.state.letters) {
@@ -187,6 +192,7 @@ export class Buttons extends Component {
 		});
 	};
 
+	/** Handles the onKeyDown event */
 	onKeyboardHandler = (event) => {
 		console.log(event.keyCode);
 

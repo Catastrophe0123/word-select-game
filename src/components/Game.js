@@ -8,6 +8,7 @@ import data from './semifinaldict.json';
 export class Game extends Component {
 	/** Jumble a given word
 	 * @param  {String} word - input word for scrambling
+	 * @param {Function} func - the callback function to call after setState
 	 */
 	jumbleWord = (wordStr, func) => {
 		wordStr = wordStr.toLowerCase();
@@ -94,11 +95,11 @@ export class Game extends Component {
 		}
 	};
 
-	/** push the letter to the selectedLetters array in state  */
+	/** push the letter to the selectedLetters array in state
+	 * @param {String} letter - the letter to set
+	 */
 	setSelectedHandler = (letter) => {
 		this.setState((st) => {
-			// ['_', '_', '_', '_'];
-			console.log('i ran boyyy');
 			let selectedLetters = [...st.selectedLetters];
 			let x = selectedLetters.findIndex((el) => el === '_');
 			selectedLetters[x] = letter;
@@ -115,7 +116,9 @@ export class Game extends Component {
 		this.setState({ selectedLetters: us.split(''), error: null });
 	};
 
-	/** helper function to remove the last entered letter in selectedLetters */
+	/** helper function to remove the last entered letter in selectedLetters
+	 * @param {Function} callback - callback function to call after setting the state
+	 */
 	backSpace = (callback) => {
 		this.setState(
 			(st) => {
