@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/buttons.css';
+import '../styles/app.css';
 
 export class Buttons extends Component {
 	// selectedLetters is a set of indices
@@ -68,16 +69,22 @@ export class Buttons extends Component {
 	/** Generates button for each letter in the word  */
 	generateButtons = () => {
 		return this.props.jumbledWord.map((letter, index) => {
+			let classes =
+				' border-2 border-blue-700 w-16  m-2  p-4 rounded hover:bg-blue-700 hover:border-black ';
+			if (this.state.selectedLetters.has(index)) {
+				classes += '  bg-gray-500 text-gray-300';
+			}
 			return (
-				<div className='flex mb-4'>
+				<div>
 					<button
-						className='center inline-flex bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow '
+						className={classes}
+						// className='inline-flex bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border hover:border-gray-400 rounded shadow '
 						key={index}
 						value={letter}
 						name={index}
 						onClick={this.onLetterClickHandler}
 						disabled={this.state.selectedLetters.has(index)}>
-						{letter}
+						{letter.toUpperCase()}
 					</button>
 				</div>
 			);
@@ -250,39 +257,50 @@ export class Buttons extends Component {
 		}
 		return (
 			<div>
-				<input
-					autoFocus
-					onKeyDown={this.onKeyboardHandler}
-					value={this.props.selectedLetters.join('')}
-				/>
-				<div className='flex flex-wrap center'>
+				<div className='flex justify-center p-6  '>
+					<input
+						spellCheck={false}
+						className='text-4xl jumbled-words  '
+						autoFocus
+						onKeyDown={this.onKeyboardHandler}
+						value={this.props.selectedLetters
+							.join('')
+							.toUpperCase()}
+					/>
+				</div>
+				<div className='flex  justify-center px-16 pt-5 flex-wrap '>
 					{this.generateButtons()}
 				</div>
 				<br />
 				<br />
-				<button
-					className='center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
-					onClick={this.backSpaceHandler}>
-					Backspace
-				</button>
-				<button
-					className='center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
-					onClick={this.onClearHandler}>
-					Clear
-				</button>
-				<button
-					className='center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
-					onClick={this.props.onCheckHandler.bind(
-						this,
-						this.onClearHandler
-					)}>
-					Check
-				</button>
-				<button
-					onClick={this.jumbleAgain.bind(this, true)}
-					className='center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'>
-					Jumble Again
-				</button>
+				<div
+					// className=' max-w-6xl '
+					className='grid button-grid gap-4 '>
+					<button
+						className='   border-2 border-blue-700  p-4 rounded px-6 hover:bg-blue-700 hover:border-black '
+						onClick={this.backSpaceHandler}>
+						Backspace
+					</button>
+					<button
+						className=' border-2 border-blue-700  p-4 rounded px-6 hover:bg-blue-700 hover:border-black '
+						onClick={this.onClearHandler}>
+						Clear
+					</button>
+					<button
+						className=' border-2 border-blue-700  p-4 rounded px-6 hover:bg-blue-700 hover:border-black '
+						onClick={this.props.onCheckHandler.bind(
+							this,
+							this.onClearHandler
+						)}>
+						Check
+					</button>
+					<button
+						className=' border-2 border-blue-700  p-4 rounded px-6 hover:bg-blue-700 hover:border-black '
+						onClick={this.jumbleAgain.bind(this, true)}>
+						{' '}
+						Jumble Again
+					</button>
+				</div>
 			</div>
 		);
 	}

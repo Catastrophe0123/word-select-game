@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Buttons from './Buttons';
 import WordTable from './WordTable';
-import logo from './logo.png';
-import '../styles/Game.css';
+import '../styles/app.css';
 import data from './semifinaldict.json';
+import '../styles/Game.css';
 
 export class Game extends Component {
 	/** Jumble a given word
@@ -17,14 +17,6 @@ export class Game extends Component {
 		this.shuffleArray(word);
 
 		let letterCounts = {};
-
-		// word.forEach((letter) => {
-		// 	// we have the letter
-		// 	let count = wordStr.split(letter).length - 1;
-		// 	let obj = {};
-		// 	obj[letter] = count;
-		// 	letterCounts.push(obj);
-		// });
 
 		for (let i = 0; i < word.length; i++) {
 			// we have the letter
@@ -79,10 +71,15 @@ export class Game extends Component {
 
 		let validWords = data[selectedWord];
 
-		this.setState({
-			validWords: new Set(validWords),
-			selectedWord,
-		});
+		this.setState(
+			{
+				validWords: new Set(validWords),
+				selectedWord,
+			},
+			() => {
+				this.props.getData(validWords);
+			}
+		);
 	};
 
 	/** Randomize array in-place using Durstenfeld shuffle algorithm
@@ -105,6 +102,12 @@ export class Game extends Component {
 			selectedLetters[x] = letter;
 			return { ...st, selectedLetters };
 		});
+	};
+
+	componentDidUpdate = () => {
+		if (this.props.seconds <= 1000 && !this.props.usedWords) {
+			this.props.setUsedWords(this.state.usedWords);
+		}
 	};
 
 	/** Set the underscores in selectedLetters initially */
@@ -190,39 +193,20 @@ export class Game extends Component {
 	render() {
 		return (
 			<div>
-				<header className='flex text-center text-2xl'>
-					{/* <Tilt
-						className='inline-flex pl-4 Tilt br2 shadow-2'
-						options={{ max: 55 }}
-						style={{ height: 150, width: 150 }}>
-						<div className='Tilt-inner pa3'>
-							<img
-								style={{ paddingTop: '5px' }}
-								alt='logo'
-								src={logo}
-							/>
-						</div>
-					</Tilt> */}
-					<h1 className='head1 center inline-flex text-white-400 '>
+				<header>
+					<h1 className='text-center mb-4 font-sans text-6xl '>
 						Word Game
 					</h1>
 				</header>
-				<div class='box transition container clearfix mx-auto border-2 rounded-none'>
-					<h1 className='text-right'>SCORE : {this.props.score}</h1>
-					<h2 className='text-center'>
-						{this.state.jumbledWord.join('')}
+				<div>
+					<h2 className='text-center font-mono text-2xl tracking-widest jumbled-words '>
+						{this.state.jumbledWord.join('').toUpperCase()}
 					</h2>
-					{/* <h1
-						style={{ letterSpacing: '5px' }}
-						className='center tracking-widest'>
-						{' '}
-						{this.state.selectedLetters}{' '}
-					</h1> */}
 
 					{this.state.selectedWord ? (
 						<div>
 							<Buttons
-								className='center'
+								// className='center'
 								setSelectedHandler={this.setSelectedHandler}
 								jumbledWord={this.state.jumbledWord}
 								jumbleWord={this.jumbleWord}
@@ -236,7 +220,11 @@ export class Game extends Component {
 						</div>
 					) : null}
 
-					{this.state.error ? <p>{this.state.error}</p> : null}
+					{this.state.error ? (
+						<p className=' m-4 text-lg text-center text-red-500'>
+							{this.state.error}
+						</p>
+					) : null}
 
 					<WordTable usedWords={[...this.state.usedWords]} />
 				</div>
