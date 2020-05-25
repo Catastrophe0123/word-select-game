@@ -32,7 +32,14 @@ Input:
 -   [x] As the user types words arrange them in different columns – 3 letters in one, 4 letters in another etc.
 -   [x] Implement – Jumble Again (this will re-arrange the letters of the word randomly but make sure that the original word is never shown). Users can request “Jumble” many times.
 -   [x] Introduce the concept of levels. The basic game is Level-1 Each new level increases the word length by 1. For example, Level-2 is a 7-letter word, Level-3 is 8 letters, Level-4 is 9 letters and Level-5 is 10 letters.
+-   [x] Keyboard support
 
 ## Todo
 
 -   [ ] Introduce a system of high scores for complex words. Complex words are not in common vocabulary.
+
+## Screenshots
+
+![initial look](https://raw.githubusercontent.com/Catastrophe0123/word-select-game/feature/src/screenshots/initial.png)
+
+![current](https://raw.githubusercontent.com/Catastrophe0123/word-select-game/feature/src/screenshots/current.png)

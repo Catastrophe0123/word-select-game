@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
 import Buttons from './Buttons';
 import WordTable from './WordTable';
-import Tilt from 'react-tilt';
-import logo from './logo.png';
+import '../styles/app.css';
+import data from './semifinaldict.json';
 import '../styles/Game.css';
-import data from './dummyData.json';
 
 export class Game extends Component {
 	/** Jumble a given word
 	 * @param  {String} word - input word for scrambling
+	 * @param {Function} func - the callback function to call after setState
 	 */
-	jumbleWord = (word) => {
-		word = word.toLowerCase();
+	jumbleWord = (wordStr, func) => {
+		wordStr = wordStr.toLowerCase();
 		// word is now orange
-		word = word.split('');
+		let word = wordStr.split('');
 		this.shuffleArray(word);
-		this.setState({ jumbledWord: word }, function () {
+
+		let letterCounts = {};
+
+		for (let i = 0; i < word.length; i++) {
+			// we have the letter
+			let count = wordStr.split(wordStr[i]).length - 1;
+			letterCounts[wordStr[i]] = count;
+		}
+
+		this.setState({ jumbledWord: word, letterCounts }, function () {
+			func(this.state.jumbledWord);
 			this.setUnderscores();
 		});
 	};
@@ -30,6 +40,7 @@ export class Game extends Component {
 			usedWords: new Set(),
 			selectedLetters: [],
 			error: null,
+			letterCounts: {},
 		};
 	}
 
@@ -47,7 +58,6 @@ export class Game extends Component {
 	 */
 	selectWord = (wordLength) => {
 		// take the size of the word to choose as a param
-		// current word is hardcoded to ORANGE
 
 		let filteredWords = Object.keys(data).filter(
 			(word) => word.length === wordLength
@@ -61,10 +71,15 @@ export class Game extends Component {
 
 		let validWords = data[selectedWord];
 
-		this.setState({
-			validWords: new Set(validWords),
-			selectedWord,
-		});
+		this.setState(
+			{
+				validWords: new Set(validWords),
+				selectedWord,
+			},
+			() => {
+				this.props.getData(validWords);
+			}
+		);
 	};
 
 	/** Randomize array in-place using Durstenfeld shuffle algorithm
@@ -77,15 +92,22 @@ export class Game extends Component {
 		}
 	};
 
-	/** push the letter to the selectedLetters array in state  */
+	/** push the letter to the selectedLetters array in state
+	 * @param {String} letter - the letter to set
+	 */
 	setSelectedHandler = (letter) => {
 		this.setState((st) => {
-			// ['_', '_', '_', '_'];
 			let selectedLetters = [...st.selectedLetters];
 			let x = selectedLetters.findIndex((el) => el === '_');
 			selectedLetters[x] = letter;
 			return { ...st, selectedLetters };
 		});
+	};
+
+	componentDidUpdate = () => {
+		if (this.props.seconds <= 1000 && !this.props.usedWords) {
+			this.props.setUsedWords(this.state.usedWords);
+		}
 	};
 
 	/** Set the underscores in selectedLetters initially */
@@ -97,19 +119,26 @@ export class Game extends Component {
 		this.setState({ selectedLetters: us.split(''), error: null });
 	};
 
-	/** helper function to remove the last entered letter in selectedLetters */
-	backSpace = () => {
-		this.setState((st) => {
-			let selectedLetters = [...st.selectedLetters];
-			let x = selectedLetters.findIndex((el) => el === '_');
-			if (x === -1) {
-				let lastIndex = selectedLetters.length - 1;
-				selectedLetters[lastIndex] = '_';
-			} else {
-				selectedLetters[x - 1] = '_';
+	/** helper function to remove the last entered letter in selectedLetters
+	 * @param {Function} callback - callback function to call after setting the state
+	 */
+	backSpace = (callback) => {
+		this.setState(
+			(st) => {
+				let selectedLetters = [...st.selectedLetters];
+				let x = selectedLetters.findIndex((el) => el === '_');
+				if (x === -1) {
+					let lastIndex = selectedLetters.length - 1;
+					selectedLetters[lastIndex] = '_';
+				} else {
+					selectedLetters[x - 1] = '_';
+				}
+				return { ...st, selectedLetters, error: null };
+			},
+			() => {
+				callback();
 			}
-			return { ...st, selectedLetters, error: null };
-		});
+		);
 	};
 
 	/** Check if the userWord is a valid word and add score
@@ -122,6 +151,7 @@ export class Game extends Component {
 		}
 		userWord = userWord.toLowerCase();
 		if (
+			// Object.keys(data).includes(userWord) &&
 			this.state.validWords.has(userWord) &&
 			!this.state.usedWords.has(userWord)
 		) {
@@ -163,46 +193,38 @@ export class Game extends Component {
 	render() {
 		return (
 			<div>
-				<header className='flex text-center text-2xl'>
-					<Tilt
-						className='inline-flex pl-4 Tilt br2 shadow-2'
-						options={{ max: 55 }}
-						style={{ height: 150, width: 150 }}>
-						<div className='Tilt-inner pa3'>
-							<img
-								style={{ paddingTop: '5px' }}
-								alt='logo'
-								src={logo}
-							/>
-						</div>
-					</Tilt>
-					<h1 className='head1 center inline-flex text-white-400 '>
-						Word Game
+				<header>
+					<h1 className='text-center mb-4 font-sans text-6xl '>
+						World of Words
 					</h1>
 				</header>
-				<div class='box transition container clearfix mx-auto border-2 rounded-none'>
-					<h1 className='text-right'>SCORE : {this.props.score}</h1>
-					<h2 className='text-center'>
-						{this.state.jumbledWord.join('')}
+				<div>
+					<h2 className='text-center font-mono text-2xl tracking-widest jumbled-words '>
+						{this.state.jumbledWord.join('').toUpperCase()}
 					</h2>
-					<h1 className='center tracking-widest'>
-						{' '}
-						{this.state.selectedLetters}{' '}
-					</h1>
+
 					{this.state.selectedWord ? (
-						<Buttons
-							className='center'
-							setSelectedHandler={this.setSelectedHandler}
-							jumbledWord={this.state.jumbledWord}
-							jumbleWord={this.jumbleWord}
-							selectedWord={this.state.selectedWord}
-							backSpace={this.backSpace}
-							setUnderscores={this.setUnderscores}
-							onCheckHandler={this.onCheckHandler}
-						/>
+						<div>
+							<Buttons
+								// className='center'
+								setSelectedHandler={this.setSelectedHandler}
+								jumbledWord={this.state.jumbledWord}
+								jumbleWord={this.jumbleWord}
+								selectedWord={this.state.selectedWord}
+								backSpace={this.backSpace}
+								setUnderscores={this.setUnderscores}
+								onCheckHandler={this.onCheckHandler}
+								selectedLetters={this.state.selectedLetters}
+								letterCounts={this.state.letterCounts}
+							/>
+						</div>
 					) : null}
 
-					{this.state.error ? <p>{this.state.error}</p> : null}
+					{this.state.error ? (
+						<p className=' m-4 text-lg text-center text-red-500'>
+							{this.state.error}
+						</p>
+					) : null}
 
 					<WordTable usedWords={[...this.state.usedWords]} />
 				</div>
