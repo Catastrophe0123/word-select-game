@@ -39,3 +39,7 @@ Input:
 -   [ ] Introduce a system of high scores for complex words. Complex words are not in common vocabulary.
 
 ## Screenshots
+
+![initial look](https://raw.githubusercontent.com/Catastrophe0123/word-select-game/feature/src/screenshots/initial.png)
+
+![current](https://raw.githubusercontent.com/Catastrophe0123/word-select-game/feature/src/screenshots/current.png)

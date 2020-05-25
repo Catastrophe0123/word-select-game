@@ -195,7 +195,7 @@ export class Game extends Component {
 			<div>
 				<header>
 					<h1 className='text-center mb-4 font-sans text-6xl '>
-						Word Game
+						World of Words
 					</h1>
 				</header>
 				<div>

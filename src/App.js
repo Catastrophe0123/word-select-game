@@ -154,7 +154,7 @@ export class App extends Component {
 		}
 		return (
 			<div className=' text-white'>
-				<div className='container mx-auto px-2 mt-2  '>
+				<div className='container mx-auto px-2 mt-4  '>
 					<div className='font-mono text-3xl w-full '>
 						<div className='flex justify-between flex-wrap '>
 							<p>
