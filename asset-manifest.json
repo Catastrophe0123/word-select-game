@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/word-select-game/static/css/main.38a101af.chunk.css",
-    "main.js": "/word-select-game/static/js/main.150cf528.chunk.js",
-    "main.js.map": "/word-select-game/static/js/main.150cf528.chunk.js.map",
+    "main.css": "/word-select-game/static/css/main.637b113d.chunk.css",
+    "main.js": "/word-select-game/static/js/main.abdfc484.chunk.js",
+    "main.js.map": "/word-select-game/static/js/main.abdfc484.chunk.js.map",
     "runtime-main.js": "/word-select-game/static/js/runtime-main.7b75daf3.js",
     "runtime-main.js.map": "/word-select-game/static/js/runtime-main.7b75daf3.js.map",
     "static/js/2.7a375b52.chunk.js": "/word-select-game/static/js/2.7a375b52.chunk.js",
     "static/js/2.7a375b52.chunk.js.map": "/word-select-game/static/js/2.7a375b52.chunk.js.map",
     "index.html": "/word-select-game/index.html",
-    "precache-manifest.07a372fce6b23cb2795ee04a9827be31.js": "/word-select-game/precache-manifest.07a372fce6b23cb2795ee04a9827be31.js",
+    "precache-manifest.cd5d71532fc67e98769dc4d94e6d47b4.js": "/word-select-game/precache-manifest.cd5d71532fc67e98769dc4d94e6d47b4.js",
     "service-worker.js": "/word-select-game/service-worker.js",
-    "static/css/main.38a101af.chunk.css.map": "/word-select-game/static/css/main.38a101af.chunk.css.map",
+    "static/css/main.637b113d.chunk.css.map": "/word-select-game/static/css/main.637b113d.chunk.css.map",
     "static/js/2.7a375b52.chunk.js.LICENSE.txt": "/word-select-game/static/js/2.7a375b52.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7b75daf3.js",
     "static/js/2.7a375b52.chunk.js",
-    "static/css/main.38a101af.chunk.css",
-    "static/js/main.150cf528.chunk.js"
+    "static/css/main.637b113d.chunk.css",
+    "static/js/main.abdfc484.chunk.js"
   ]
 }
