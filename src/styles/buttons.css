@@ -3,11 +3,13 @@ input {
 	border: none;
 	background: 0 100%/ 10ch 2px no-repeat;
 	letter-spacing: 10px;
-	margin: 2em auto;
+	margin: 0 auto;
 	padding: 0;
 	font-size: larger;
 	text-align: center;
 	caret-color: transparent;
+	width: 100%;
+	/* font-size: 70vw; */
 }
 
 .button-grid {

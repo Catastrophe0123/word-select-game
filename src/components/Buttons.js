@@ -260,7 +260,7 @@ export class Buttons extends Component {
 				<div className='flex justify-center p-6  '>
 					<input
 						spellCheck={false}
-						className='text-4xl jumbled-words  '
+						className=' sm:text-4xl  jumbled-words text-lg  '
 						autoFocus
 						onKeyDown={this.onKeyboardHandler}
 						value={this.props.selectedLetters
