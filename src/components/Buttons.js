@@ -3,7 +3,6 @@ import '../styles/buttons.css';
 import '../styles/app.css';
 
 export class Buttons extends Component {
-	// selectedLetters is a set of indices
 	state = {
 		letters: {},
 		selectedLetters: new Set(),
@@ -30,8 +29,6 @@ export class Buttons extends Component {
 
 				x.splice(i, 1);
 
-				console.log(x);
-
 				let newdata = {};
 				for (let j in st.ds) {
 					if (j == letter) {
@@ -49,21 +46,16 @@ export class Buttons extends Component {
 				};
 			},
 			() => {
-				console.log('i ransjkdn');
 				this.props.setSelectedHandler(letter);
 			}
 		);
-
-		// set the state in game
 	};
 
 	/** Letter select handler */
 	onLetterClickHandler = (event) => {
 		let letter = event.target.value;
 		let index = parseInt(event.target.name);
-		// we got the letter that was selected
 		this.onLetterHelper(letter, index);
-		// we have the count in props.letterCounts
 	};
 
 	/** Generates button for each letter in the word  */
@@ -75,10 +67,9 @@ export class Buttons extends Component {
 				classes += '  bg-gray-500 text-gray-300';
 			}
 			return (
-				<div>
+				<div key={index}>
 					<button
 						className={classes}
-						// className='inline-flex bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border hover:border-gray-400 rounded shadow '
 						key={index}
 						value={letter}
 						name={index}
@@ -102,9 +93,7 @@ export class Buttons extends Component {
 			this.setState((st) => {
 				let selectedLetters = [...st.selectedLetters];
 				let index = selectedLetters.pop();
-				console.log('idx : ', index);
 				if (index === null || index === undefined) {
-					console.log('qweqweqwe');
 					return { ...st };
 				}
 
@@ -113,10 +102,8 @@ export class Buttons extends Component {
 				let cpyulc = { ...st.usedLetterCounts };
 				cpyulc[letter] = st.usedLetterCounts[letter] - 1;
 
-				console.log(st.ds[letter]);
 				let x = [...st.ds[letter]];
 				x.push(index.toString());
-				console.log('x : ', x);
 
 				let newdata = {};
 				for (let j in st.ds) {
@@ -126,8 +113,6 @@ export class Buttons extends Component {
 						newdata[j] = [...st.ds[j]];
 					}
 				}
-
-				console.log(newdata);
 
 				selectedLetters = new Set(selectedLetters);
 
@@ -146,14 +131,10 @@ export class Buttons extends Component {
 		this.setState({ selectedLetters: new Set() });
 		this.props.setUnderscores();
 
-		// have to do some stuff
-		// update usedLetterCounts
-
 		this.setState(
 			(st) => {
 				let usedLetterCounts = {};
 				for (let i in st.usedLetterCounts) {
-					console.log(i);
 					usedLetterCounts[i] = 0;
 				}
 				return {
@@ -201,8 +182,6 @@ export class Buttons extends Component {
 
 	/** Handles the onKeyDown event */
 	onKeyboardHandler = (event) => {
-		console.log(event.keyCode);
-
 		// backspace
 		if (event.keyCode === 8) {
 			this.backSpaceHandler();
@@ -216,7 +195,6 @@ export class Buttons extends Component {
 
 		let letter = String.fromCharCode(event.keyCode);
 		letter = letter.toLowerCase();
-		// we have the letter now
 		if (Object.keys(this.state.usedLetterCounts).includes(letter)) {
 			let count = this.state.usedLetterCounts[letter];
 
@@ -273,9 +251,7 @@ export class Buttons extends Component {
 				</div>
 				<br />
 				<br />
-				<div
-					// className=' max-w-6xl '
-					className='grid button-grid gap-4 '>
+				<div className='grid button-grid gap-4 '>
 					<button
 						className='   border-2 border-blue-700  p-4 rounded px-6 hover:bg-blue-700 hover:border-black '
 						onClick={this.backSpaceHandler}>

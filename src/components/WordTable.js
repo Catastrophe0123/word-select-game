@@ -11,8 +11,6 @@ export class WordTable extends Component {
 
 		this.props.usedWords.forEach((el, index) => {
 			let length = el.length;
-			// we have the length
-			// elements[length] = [];
 			if (elements[length]) {
 				elements[length].push(el);
 			} else {
@@ -22,13 +20,10 @@ export class WordTable extends Component {
 		});
 
 		return (
-			<div
-				className='grid table-grid'
-				// className='table center flex'
-			>
+			<div className='grid table-grid'>
 				{Object.values(elements).map((el, index) => {
 					return (
-						<div className='tracking-wide p-1  '>
+						<div key={index} className='tracking-wide p-1  '>
 							<h2 className='font-medium'>
 								{el[0].length} letter words{' '}
 							</h2>
@@ -51,7 +46,7 @@ export class WordTable extends Component {
 	render() {
 		return (
 			<div className='mt-5 text-lg '>
-				<h1 className='   text-2xl flex justify-center'>Your Words</h1>
+				<h1 className='text-2xl flex justify-center'>Your Words</h1>
 				{this.classifyLength()}
 			</div>
 		);

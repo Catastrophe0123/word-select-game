@@ -57,14 +57,10 @@ export class Game extends Component {
 	 * @param {Number} wordLength - the required word length
 	 */
 	selectWord = (wordLength) => {
-		// take the size of the word to choose as a param
-
 		let filteredWords = Object.keys(data).filter(
 			(word) => word.length === wordLength
 		);
 
-		// filteredWords is all 6 letter words eg => ["orange", "mobile"]
-		// pick one word from here
 		let idx = this.getRandomInt(filteredWords.length);
 
 		let selectedWord = filteredWords[idx];
@@ -151,7 +147,6 @@ export class Game extends Component {
 		}
 		userWord = userWord.toLowerCase();
 		if (
-			// Object.keys(data).includes(userWord) &&
 			this.state.validWords.has(userWord) &&
 			!this.state.usedWords.has(userWord)
 		) {
@@ -186,8 +181,6 @@ export class Game extends Component {
 
 	componentDidMount = () => {
 		this.selectWord(this.props.wordLength);
-		// jumble the selected word
-		// this.jumbleWord(this.state.selectedWord);
 	};
 
 	render() {
@@ -206,7 +199,6 @@ export class Game extends Component {
 					{this.state.selectedWord ? (
 						<div>
 							<Buttons
-								// className='center'
 								setSelectedHandler={this.setSelectedHandler}
 								jumbledWord={this.state.jumbledWord}
 								jumbleWord={this.jumbleWord}

@@ -87,7 +87,6 @@ export class App extends Component {
 				}
 			});
 			words.sort((a, b) => b.length - a.length);
-			console.log(words);
 
 			return (
 				<div>
