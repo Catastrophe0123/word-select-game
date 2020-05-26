@@ -16,7 +16,7 @@ export class App extends Component {
 		wordLength: 6,
 		scoreToBeat: 100,
 		validWords: new Set(),
-		usedWords: null,
+		usedWords: new Set(),
 	};
 
 	/** Set the score state in the app component
@@ -38,7 +38,7 @@ export class App extends Component {
 				scoreToBeat: st.scoreToBeat + 50,
 				wordLength: (st.wordLength += 1),
 				validWords: new Set(),
-				usedWords: [],
+				usedWords: new Set(),
 			};
 		});
 	};
@@ -57,7 +57,7 @@ export class App extends Component {
 				scoreToBeat: 100,
 				wordLength: 6,
 				validWords: new Set(),
-				usedWords: [],
+				usedWords: new Set(),
 			};
 		});
 	};
@@ -72,6 +72,7 @@ export class App extends Component {
 	};
 
 	setUsedWords = (usedWords) => {
+		console.log('i ran');
 		this.setState({ usedWords });
 	};
 
@@ -79,48 +80,46 @@ export class App extends Component {
 	displayModal = () => {
 		const gameoverString = 'GAME OVER';
 
-		if (this.state.showModal) {
-			let words = [];
-			this.state.validWords.forEach((el) => {
-				if (!this.state.usedWords.has(el)) {
-					words.push(el);
-				}
-			});
-			words.sort((a, b) => b.length - a.length);
+		let words = [];
+		this.state.validWords.forEach((el) => {
+			if (!this.state.usedWords.has(el)) {
+				words.push(el);
+			}
+		});
+		words.sort((a, b) => b.length - a.length);
 
-			return (
-				<div>
-					<Modal>
-						<div>
-							<h4 className='text-center font-bold text-2xl  '>
-								{gameoverString}
-							</h4>
-							<p>You missed : </p>
-							<ul className='list-none text-center '>
-								{words.slice(0, 6).map((el, id) => {
-									return (
-										<li
-											className='border border-blue-700 my-2 rounded shadow-sm '
-											key={id}>
-											{' '}
-											{el.toUpperCase()}{' '}
-										</li>
-									);
-								})}
-							</ul>
-							<div className='flex justify-center'>
-								<button
-									className=' mt-2 border-2 border-blue-700  p-2 rounded px-6 hover:bg-blue-700 hover:border-white '
-									onClick={this.onContinueHandler}>
-									Try again
-								</button>
-							</div>
+		return (
+			<div>
+				<Modal>
+					<div>
+						<h4 className='text-center font-bold text-2xl  '>
+							{gameoverString}
+						</h4>
+						<p>You missed : </p>
+						<ul className='list-none text-center '>
+							{words.slice(0, 6).map((el, id) => {
+								return (
+									<li
+										className='border border-blue-700 my-2 rounded shadow-sm '
+										key={id}>
+										{' '}
+										{el.toUpperCase()}{' '}
+									</li>
+								);
+							})}
+						</ul>
+						<div className='flex justify-center'>
+							<button
+								className=' mt-2 border-2 border-blue-700  p-2 rounded px-6 hover:bg-blue-700 hover:border-white '
+								onClick={this.onContinueHandler}>
+								Try again
+							</button>
 						</div>
-					</Modal>
-					<BackDrop onclick={this.onContinueHandler} />
-				</div>
-			);
-		}
+					</div>
+				</Modal>
+				<BackDrop onclick={this.onContinueHandler} />
+			</div>
+		);
 	};
 
 	/** Function that checks score and moves to next stage when timer ends */
@@ -189,8 +188,7 @@ export class App extends Component {
 						setUsedWords={this.setUsedWords}
 						usedWords={this.state.usedWords}
 					/>
-
-					{this.displayModal()}
+					{this.state.showModal ? this.displayModal() : null}
 				</div>
 			</div>
 		);

@@ -100,11 +100,11 @@ export class Game extends Component {
 		});
 	};
 
-	componentDidUpdate = () => {
-		if (this.props.seconds <= 1000 && !this.props.usedWords) {
-			this.props.setUsedWords(this.state.usedWords);
-		}
-	};
+	// componentDidUpdate = () => {
+	// 	if (this.props.seconds <= 1000 && !this.props.usedWords) {
+	// 		this.props.setUsedWords(this.state.usedWords);
+	// 	}
+	// };
 
 	/** Set the underscores in selectedLetters initially */
 	setUnderscores = () => {
@@ -154,23 +154,28 @@ export class Game extends Component {
 			// set errors to null
 			// clear the input
 			// add the word to the usedWords array
-			this.setState((st) => {
-				let len = userWord.length;
-				let score = this.props.score;
-				if (len === 3) score += 5;
-				if (len === 4) score += 10;
-				if (len === 5) score += 20;
-				if (len === 6) score += 50;
-				if (len === 7) score += 75;
-				if (len === 8) score += 100;
-				if (len === 9) score += 150;
-				if (len === 10) score += 200;
-				let usedWords = new Set(st.usedWords);
-				usedWords.add(userWord);
-				onClearHandler();
-				this.props.setScore(score);
-				return { ...st, error: null, usedWords };
-			});
+			this.setState(
+				(st) => {
+					let len = userWord.length;
+					let score = this.props.score;
+					if (len === 3) score += 5;
+					if (len === 4) score += 10;
+					if (len === 5) score += 20;
+					if (len === 6) score += 50;
+					if (len === 7) score += 75;
+					if (len === 8) score += 100;
+					if (len === 9) score += 150;
+					if (len === 10) score += 200;
+					let usedWords = new Set(st.usedWords);
+					usedWords.add(userWord);
+					onClearHandler();
+					this.props.setScore(score);
+					return { ...st, error: null, usedWords };
+				},
+				() => {
+					this.props.setUsedWords(this.state.usedWords);
+				}
+			);
 		} else if (this.state.usedWords.has(userWord)) {
 			this.setState({ error: 'We have been through this before' });
 		} else {
