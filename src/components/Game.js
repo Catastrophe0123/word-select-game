@@ -44,6 +44,11 @@ export class Game extends Component {
 		};
 	}
 
+	setLetterError = (letter) => {
+		let error = `The letter ${letter} is not in the list of allowed letters`;
+		this.setState({ error });
+	};
+
 	/** generate random number between 0 and max value
 	 *  - 0 is inclusive
 	 * - max is exclusive
@@ -184,6 +189,10 @@ export class Game extends Component {
 		}
 	};
 
+	clearError = () => {
+		this.setState({ error: null });
+	};
+
 	componentDidMount = () => {
 		this.selectWord(this.props.wordLength);
 	};
@@ -213,14 +222,11 @@ export class Game extends Component {
 								onCheckHandler={this.onCheckHandler}
 								selectedLetters={this.state.selectedLetters}
 								letterCounts={this.state.letterCounts}
+								setLetterError={this.setLetterError}
+								clearError={this.clearError}
+								error={this.state.error}
 							/>
 						</div>
-					) : null}
-
-					{this.state.error ? (
-						<p className=' m-4 text-lg text-center text-red-500'>
-							{this.state.error}
-						</p>
 					) : null}
 
 					<WordTable usedWords={[...this.state.usedWords]} />

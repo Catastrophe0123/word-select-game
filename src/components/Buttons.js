@@ -47,6 +47,7 @@ export class Buttons extends Component {
 			},
 			() => {
 				this.props.setSelectedHandler(letter);
+				this.props.clearError();
 			}
 		);
 	};
@@ -115,7 +116,6 @@ export class Buttons extends Component {
 				}
 
 				selectedLetters = new Set(selectedLetters);
-
 				return {
 					...st,
 					selectedLetters,
@@ -196,6 +196,8 @@ export class Buttons extends Component {
 					};
 				});
 			}
+		} else {
+			this.props.setLetterError(letter);
 		}
 	};
 
@@ -223,6 +225,11 @@ export class Buttons extends Component {
 
 		// this.inputRef.selectionStart = this.inputRef.value.length;
 		// this.inputRef.selectionEnd = this.inputRef.value.length;
+		let str = `${this.inputRef.value}_`;
+
+		if (str === this.props.selectedLetters.join('').toUpperCase()) {
+			return;
+		}
 
 		letter = letter.toLowerCase();
 		if (letter === '_') {
@@ -278,8 +285,20 @@ export class Buttons extends Component {
 				<div className='flex  justify-center px-16 pt-5 flex-wrap '>
 					{this.generateButtons()}
 				</div>
-				<br />
-				<br />
+				{this.props.error ? (
+					<div>
+						<p className=' m-4 text-lg text-center text-red-500'>
+							{this.props.error}
+						</p>
+						<br />
+					</div>
+				) : (
+					<div>
+						<br />
+						<br />
+					</div>
+				)}
+
 				<div className='grid button-grid gap-4 '>
 					<button
 						className='   border-2 border-blue-700  p-4 rounded px-6 hover:bg-blue-700 hover:border-black '

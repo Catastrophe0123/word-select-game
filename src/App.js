@@ -77,7 +77,7 @@ export class App extends Component {
 
 	/** display the game over modal */
 	displayModal = () => {
-		const gameoverString = 'GAME OVER';
+		const gameoverString = 'TIME UP';
 
 		let words = [];
 		this.state.validWords.forEach((el) => {
@@ -94,7 +94,7 @@ export class App extends Component {
 						<h4 className='text-center font-bold text-2xl  '>
 							{gameoverString}
 						</h4>
-						<p>You missed : </p>
+						<p>Top words you missed : </p>
 						<ul className='list-none text-center '>
 							{words.slice(0, 6).map((el, id) => {
 								return (

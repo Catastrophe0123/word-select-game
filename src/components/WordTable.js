@@ -27,12 +27,12 @@ export class WordTable extends Component {
 							<h2 className='font-medium'>
 								{el[0].length} letter words{' '}
 							</h2>
-							{el.map((word) => {
+							{el.map((word, idx) => {
 								return (
 									<div
 										className=' text-center pb-1 rounded-lg'
-										key={index}>
-										{word}
+										key={idx}>
+										{word.toUpperCase()}
 									</div>
 								);
 							})}
