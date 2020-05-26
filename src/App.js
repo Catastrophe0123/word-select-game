@@ -72,7 +72,6 @@ export class App extends Component {
 	};
 
 	setUsedWords = (usedWords) => {
-		console.log('i ran');
 		this.setState({ usedWords });
 	};
 

@@ -180,21 +180,8 @@ export class Buttons extends Component {
 		});
 	};
 
-	/** Handles the onKeyDown event */
-	onKeyboardHandler = (event) => {
-		// backspace
-		if (event.keyCode === 8) {
-			this.backSpaceHandler();
-			return;
-		}
-
-		if (event.keyCode === 13) {
-			this.props.onCheckHandler(this.onClearHandler);
-			return;
-		}
-
-		let letter = String.fromCharCode(event.keyCode);
-		letter = letter.toLowerCase();
+	onKeyPressHelper = (letter) => {
+		console.log('i ran keypresshelper');
 		if (Object.keys(this.state.usedLetterCounts).includes(letter)) {
 			let count = this.state.usedLetterCounts[letter];
 
@@ -210,6 +197,50 @@ export class Buttons extends Component {
 					};
 				});
 			}
+		}
+	};
+
+	/** Handles the onKeyDown event */
+	onKeyboardHandler = (event) => {
+		// backspace
+		console.log('i ran onkyedow');
+		if (event.keyCode === 8) {
+			this.backSpaceHandler();
+			return;
+		}
+
+		if (event.keyCode === 13) {
+			this.props.onCheckHandler(this.onClearHandler);
+			return;
+		}
+		// let letter = String.fromCharCode(event.keyCode);
+		// letter = letter.toLowerCase();
+		// if (Object.keys(this.state.usedLetterCounts).includes(letter)) {
+		// 	let count = this.state.usedLetterCounts[letter];
+
+		// 	if (count < this.props.letterCounts[letter]) {
+		// 		this.setState((st) => {
+		// 			let letterarray = [...st.ds[letter]];
+		// 			let index = parseInt(letterarray.pop());
+
+		// 			this.onLetterHelper(letter, index);
+
+		// 			return {
+		// 				...st,
+		// 			};
+		// 		});
+		// 	}
+		// }
+	};
+
+	onChangeHandler = (event) => {
+		let str = event.target.value;
+		// we have the str
+		console.log('i ran onCHange');
+		let letter = str[str.length - 1];
+		console.log(letter);
+		if (letter !== '_') {
+			this.onKeyPressHelper(letter);
 		}
 	};
 
@@ -240,6 +271,7 @@ export class Buttons extends Component {
 						spellCheck={false}
 						className=' sm:text-4xl  jumbled-words text-lg  '
 						autoFocus
+						onChange={this.onChangeHandler}
 						onKeyDown={this.onKeyboardHandler}
 						value={this.props.selectedLetters
 							.join('')
