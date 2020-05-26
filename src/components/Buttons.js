@@ -31,7 +31,7 @@ export class Buttons extends Component {
 
 				let newdata = {};
 				for (let j in st.ds) {
-					if (j == letter) {
+					if (j === letter) {
 						newdata[letter] = [...x];
 					} else {
 						newdata[j] = [...st.ds[j]];
@@ -107,7 +107,7 @@ export class Buttons extends Component {
 
 				let newdata = {};
 				for (let j in st.ds) {
-					if (j == letter) {
+					if (j === letter) {
 						newdata[letter] = [...x];
 					} else {
 						newdata[j] = [...st.ds[j]];
@@ -181,7 +181,6 @@ export class Buttons extends Component {
 	};
 
 	onKeyPressHelper = (letter) => {
-		console.log('i ran keypresshelper');
 		if (Object.keys(this.state.usedLetterCounts).includes(letter)) {
 			let count = this.state.usedLetterCounts[letter];
 
@@ -202,8 +201,12 @@ export class Buttons extends Component {
 
 	/** Handles the onKeyDown event */
 	onKeyboardHandler = (event) => {
+		// this.inputRef.selectionStart = this.props.selectedLetters.length;
+		// this.inputRef.selectionEnd = this.props.selectedLetters.length;
+		this.inputRef.selectionStart = 0;
+		this.inputRef.selectionEnd = 0;
+
 		// backspace
-		console.log('i ran onkyedow');
 		if (event.keyCode === 8) {
 			this.backSpaceHandler();
 			return;
@@ -213,34 +216,24 @@ export class Buttons extends Component {
 			this.props.onCheckHandler(this.onClearHandler);
 			return;
 		}
-		// let letter = String.fromCharCode(event.keyCode);
-		// letter = letter.toLowerCase();
-		// if (Object.keys(this.state.usedLetterCounts).includes(letter)) {
-		// 	let count = this.state.usedLetterCounts[letter];
-
-		// 	if (count < this.props.letterCounts[letter]) {
-		// 		this.setState((st) => {
-		// 			let letterarray = [...st.ds[letter]];
-		// 			let index = parseInt(letterarray.pop());
-
-		// 			this.onLetterHelper(letter, index);
-
-		// 			return {
-		// 				...st,
-		// 			};
-		// 		});
-		// 	}
-		// }
 	};
 
 	onChangeHandler = (event) => {
-		let str = event.target.value;
-		// we have the str
-		console.log('i ran onCHange');
-		let letter = str[str.length - 1];
-		console.log(letter);
+		let letter = this.inputRef.value[0];
+
+		// this.inputRef.selectionStart = this.inputRef.value.length;
+		// this.inputRef.selectionEnd = this.inputRef.value.length;
+
+		letter = letter.toLowerCase();
+		if (letter === '_') {
+			this.backSpaceHandler();
+			return;
+		}
+
 		if (letter !== '_') {
-			this.onKeyPressHelper(letter);
+			return this.onKeyPressHelper(letter);
+		} else {
+			// this.backSpaceHandler();
 		}
 	};
 
@@ -271,6 +264,10 @@ export class Buttons extends Component {
 						spellCheck={false}
 						className=' sm:text-4xl  jumbled-words text-lg  '
 						autoFocus
+						// onFocus={this.onFocusHandler}
+						ref={(inputEl) => {
+							this.inputRef = inputEl;
+						}}
 						onChange={this.onChangeHandler}
 						onKeyDown={this.onKeyboardHandler}
 						value={this.props.selectedLetters
