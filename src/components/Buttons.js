@@ -264,6 +264,8 @@ export class Buttons extends Component {
 				this.setDs();
 			});
 		}
+
+		if (this.inputRef) this.inputRef.focus();
 		return (
 			<div>
 				<div className='flex justify-center p-6  '>
@@ -316,7 +318,7 @@ export class Buttons extends Component {
 							this,
 							this.onClearHandler
 						)}>
-						Check
+						Submit
 					</button>
 					<button
 						className=' border-2 border-blue-700  p-4 rounded px-6 hover:bg-blue-700 hover:border-black '
