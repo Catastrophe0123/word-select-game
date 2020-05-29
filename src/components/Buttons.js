@@ -31,7 +31,7 @@ export class Buttons extends Component {
 
 				let newdata = {};
 				for (let j in st.ds) {
-					if (j == letter) {
+					if (j === letter) {
 						newdata[letter] = [...x];
 					} else {
 						newdata[j] = [...st.ds[j]];
@@ -47,6 +47,7 @@ export class Buttons extends Component {
 			},
 			() => {
 				this.props.setSelectedHandler(letter);
+				this.props.clearError();
 			}
 		);
 	};
@@ -107,7 +108,7 @@ export class Buttons extends Component {
 
 				let newdata = {};
 				for (let j in st.ds) {
-					if (j == letter) {
+					if (j === letter) {
 						newdata[letter] = [...x];
 					} else {
 						newdata[j] = [...st.ds[j]];
@@ -115,7 +116,6 @@ export class Buttons extends Component {
 				}
 
 				selectedLetters = new Set(selectedLetters);
-
 				return {
 					...st,
 					selectedLetters,
@@ -180,21 +180,7 @@ export class Buttons extends Component {
 		});
 	};
 
-	/** Handles the onKeyDown event */
-	onKeyboardHandler = (event) => {
-		// backspace
-		if (event.keyCode === 8) {
-			this.backSpaceHandler();
-			return;
-		}
-
-		if (event.keyCode === 13) {
-			this.props.onCheckHandler(this.onClearHandler);
-			return;
-		}
-
-		let letter = String.fromCharCode(event.keyCode);
-		letter = letter.toLowerCase();
+	onKeyPressHelper = (letter) => {
 		if (Object.keys(this.state.usedLetterCounts).includes(letter)) {
 			let count = this.state.usedLetterCounts[letter];
 
@@ -210,6 +196,51 @@ export class Buttons extends Component {
 					};
 				});
 			}
+		} else {
+			this.props.setLetterError(letter);
+		}
+	};
+
+	/** Handles the onKeyDown event */
+	onKeyboardHandler = (event) => {
+		// this.inputRef.selectionStart = this.props.selectedLetters.length;
+		// this.inputRef.selectionEnd = this.props.selectedLetters.length;
+		this.inputRef.selectionStart = 0;
+		this.inputRef.selectionEnd = 0;
+
+		// backspace
+		if (event.keyCode === 8) {
+			this.backSpaceHandler();
+			return;
+		}
+
+		if (event.keyCode === 13) {
+			this.props.onCheckHandler(this.onClearHandler);
+			return;
+		}
+	};
+
+	onChangeHandler = (event) => {
+		let letter = this.inputRef.value[0];
+
+		// this.inputRef.selectionStart = this.inputRef.value.length;
+		// this.inputRef.selectionEnd = this.inputRef.value.length;
+		let str = `${this.inputRef.value}_`;
+
+		if (str === this.props.selectedLetters.join('').toUpperCase()) {
+			return;
+		}
+
+		letter = letter.toLowerCase();
+		if (letter === '_') {
+			this.backSpaceHandler();
+			return;
+		}
+
+		if (letter !== '_') {
+			return this.onKeyPressHelper(letter);
+		} else {
+			// this.backSpaceHandler();
 		}
 	};
 
@@ -233,6 +264,8 @@ export class Buttons extends Component {
 				this.setDs();
 			});
 		}
+
+		if (this.inputRef) this.inputRef.focus();
 		return (
 			<div>
 				<div className='flex justify-center p-6  '>
@@ -240,6 +273,11 @@ export class Buttons extends Component {
 						spellCheck={false}
 						className=' sm:text-4xl  jumbled-words text-lg  '
 						autoFocus
+						// onFocus={this.onFocusHandler}
+						ref={(inputEl) => {
+							this.inputRef = inputEl;
+						}}
+						onChange={this.onChangeHandler}
 						onKeyDown={this.onKeyboardHandler}
 						value={this.props.selectedLetters
 							.join('')
@@ -249,8 +287,20 @@ export class Buttons extends Component {
 				<div className='flex  justify-center px-16 pt-5 flex-wrap '>
 					{this.generateButtons()}
 				</div>
-				<br />
-				<br />
+				{this.props.error ? (
+					<div>
+						<p className=' m-4 text-lg text-center text-red-500'>
+							{this.props.error}
+						</p>
+						<br />
+					</div>
+				) : (
+					<div>
+						<br />
+						<br />
+					</div>
+				)}
+
 				<div className='grid button-grid gap-4 '>
 					<button
 						className='   border-2 border-blue-700  p-4 rounded px-6 hover:bg-blue-700 hover:border-black '
@@ -268,7 +318,7 @@ export class Buttons extends Component {
 							this,
 							this.onClearHandler
 						)}>
-						Check
+						Submit
 					</button>
 					<button
 						className=' border-2 border-blue-700  p-4 rounded px-6 hover:bg-blue-700 hover:border-black '
