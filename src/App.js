@@ -17,6 +17,7 @@ export class App extends Component {
 		scoreToBeat: 100,
 		validWords: new Set(),
 		usedWords: new Set(),
+		hasWon: false,
 	};
 
 	/** Set the score state in the app component
@@ -26,9 +27,37 @@ export class App extends Component {
 		this.setState({ score });
 	};
 
+	displayWinningScreen = () => {
+		let gameoverString = 'You Won!';
+
+		return (
+			<div>
+				<Modal>
+					<div>
+						<h4 className='text-center font-bold text-2xl  '>
+							{gameoverString}
+						</h4>
+						<div className='flex justify-center pt-4 '>
+							<button
+								className=' mt-2 border-2 border-blue-700   p-2 rounded px-6 hover:bg-blue-700 hover:border-white '
+								onClick={this.onContinueHandler}>
+								Play again
+							</button>
+						</div>
+					</div>
+				</Modal>
+				<BackDrop onclick={this.onContinueHandler} />
+			</div>
+		);
+	};
+
 	/** Rerender the game screen to rerender the timer and move to the next level */
 	rerenderGame = () => {
 		this.setState((st) => {
+			if (this.state.level === 5) {
+				return { ...st, hasWon: true };
+			}
+
 			return {
 				...st,
 				key: (st.key += 1),
@@ -58,6 +87,7 @@ export class App extends Component {
 				wordLength: 6,
 				validWords: new Set(),
 				usedWords: new Set(),
+				hasWon: false,
 			};
 		});
 	};
@@ -187,6 +217,8 @@ export class App extends Component {
 						setUsedWords={this.setUsedWords}
 						usedWords={this.state.usedWords}
 					/>
+
+					{this.state.hasWon ? this.displayWinningScreen() : null}
 					{this.state.showModal ? this.displayModal() : null}
 				</div>
 			</div>
