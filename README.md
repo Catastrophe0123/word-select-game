@@ -40,6 +40,6 @@ Input:
 
 ## Screenshots
 
-![initial look](https://raw.githubusercontent.com/Catastrophe0123/word-select-game/feature/src/screenshots/initial.png)
+<!-- ![initial look](https://raw.githubusercontent.com/Catastrophe0123/word-select-game/feature/src/screenshots/initial.png) -->
 
 ![current](https://raw.githubusercontent.com/Catastrophe0123/word-select-game/feature/src/screenshots/current.png)
